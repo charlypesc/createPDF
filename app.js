@@ -18,7 +18,7 @@ app.post('/generate-pdf', async (req, res) => {
             ]
           });
         const page = await browser.newPage();
-        await page.setContent(html, { waitUntil: 'networkidle0' });
+        await page.setContent('<head><link rel="stylesheet" href="https://wkfclient.bsp-inspector.cl/styles-WTPOCEGK.css" media="all"></head>'+html, { waitUntil: 'networkidle0' });
         const pdfBuffer = await page.pdf({ format: 'A4' });
         await browser.close();
 
