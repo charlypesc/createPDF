@@ -4,7 +4,8 @@
   "description": "Service to generate PDFs using Puppeteer and GCP",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "go": "node html-pdf.js"
   },
   "dependencies": {
     "express": "^4.21.1",
