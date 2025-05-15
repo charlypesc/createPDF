@@ -24,16 +24,18 @@ app.post('/generate-pdf', async (req, res) => {
           <html lang="es">
             <head>
               <meta charset="UTF-8">
+              <link rel="stylesheet" href="https://wkfclient.bsp-inspector.cl/assets/styles/editor.css">
             </head>
             <body>
               ${body}
             </body>
           </html>
         `;
-        await page.setContent(html, { waitUntil: 'networkidle0' });
-         await page.addStyleTag({
+        await page.addStyleTag({
             url: 'https://wkfclient.bsp-inspector.cl/assets/styles/editor.css'
         });
+        await page.setContent(html, { waitUntil: 'networkidle0' });
+         
         const pdfBuffer = await page.pdf({ format: 'Letter' });
         await browser.close();
 

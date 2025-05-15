@@ -21,18 +21,18 @@ app.post('/generate-pdf', async (req, res) => {
       return res.status(400).json({ error: 'El campo "html" es obligatorio.' });
     }
 
-    //const options = {
-    //   printOptions: {
-    //     format,
-    //     landscape,
-    //     marginTop: margins.top,
-    //     marginBottom: margins.bottom,
-    //     marginLeft: margins.left,
-    //     marginRight: margins.right,
-    //     printBackground: true,
-    //   },
-    // };
-
+         const body = `
+          <!DOCTYPE html>
+          <html lang="es">
+            <head>
+              <meta charset="UTF-8">
+              <link rel="stylesheet" href="https://wkfclient.bsp-inspector.cl/assets/styles/editor.css">
+            </head>
+            <body>
+              ${html}
+            </body>
+          </html>
+        `;
     const result = await pdf.create(html);
     const buffer = await result.toBuffer();
 
