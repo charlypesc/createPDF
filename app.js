@@ -5,7 +5,7 @@ const app = express();
 app.use(express.json({ limit: '10mb' }));
 
 app.post('/generate-pdf', async (req, res) => {
-    const { html } = req.body;
+    const { body } = req.body;
     try {
         const browser = await puppeteer.launch({
             headless: true,  // Habilita el modo headless (sin interfaz gráfica)
@@ -19,6 +19,17 @@ app.post('/generate-pdf', async (req, res) => {
             ]
           });
         const page = await browser.newPage();
+        const html = `
+          <!DOCTYPE html>
+          <html lang="es">
+            <head>
+              <meta charset="UTF-8">
+            </head>
+            <body>
+              ${body}
+            </body>
+          </html>
+        `;
         await page.setContent(html, { waitUntil: 'networkidle0' });
          await page.addStyleTag({
             url: 'https://wkfclient.bsp-inspector.cl/assets/styles/editor.css'
