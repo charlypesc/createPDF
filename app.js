@@ -24,6 +24,7 @@ app.post('/generate-pdf', async (req, res) => {
           <html lang="es">
             <head>
               <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
               <link rel="stylesheet" href="https://wkfclient.bsp-inspector.cl/assets/styles/editor.css">
             </head>
             <body>
@@ -35,7 +36,7 @@ app.post('/generate-pdf', async (req, res) => {
         //     url: 'https://wkfclient.bsp-inspector.cl/assets/styles/editor.css'
         // });
         await page.setContent(entireHtml, { waitUntil: 'networkidle0' });
-         
+        await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
         const pdfBuffer = await page.pdf({ format: 'Letter' });
         await browser.close();
 
