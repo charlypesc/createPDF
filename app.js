@@ -9,7 +9,7 @@ app.post('/generate-pdf', async (req, res) => {
     try {
         const browser = await puppeteer.launch({
             headless: true,  // Habilita el modo headless (sin interfaz gráfica)
-            executablePath: '/usr/bin/google-chrome',  // Ruta del ejecutable si usas Google Chrome en lugar de Chromium
+            //executablePath: '/usr/bin/google-chrome',  // Ruta del ejecutable si usas Google Chrome en lugar de Chromium
             //executablePath: '/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome',
             args: [
               '--no-sandbox',  // Desactiva el sandbox (útil en Docker)
@@ -35,10 +35,10 @@ app.post('/generate-pdf', async (req, res) => {
         // await page.addStyleTag({
         //     url: 'https://wkfclient.bsp-inspector.cl/assets/styles/editor.css'
         // });
-        await page.setViewport({ width: 1024, height: 800 });
+        await page.setViewport({ width: 1024, height: 2048 });
         await page.setContent(entireHtml, { waitUntil: 'networkidle0' });
         await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
-        const pdfBuffer = await page.pdf({ format: 'Letter', scale: 1 });
+        const pdfBuffer = await page.pdf({ format: 'Letter', scale: 0.8 });
         await browser.close();
 
         res.contentType('application/pdf');
