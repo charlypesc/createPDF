@@ -33,7 +33,7 @@ app.post('/generate-pdf', async (req, res) => {
             </body>
           </html>
         `;
-    const result = await pdf.create(html);
+    const result = await pdf.create(body);
     const buffer = await result.toBuffer();
 
     res.set({

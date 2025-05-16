@@ -5,7 +5,7 @@ const app = express();
 app.use(express.json({ limit: '10mb' }));
 
 app.post('/generate-pdf', async (req, res) => {
-    const { body } = req.body;
+    const { html } = req.body;
     try {
         const browser = await puppeteer.launch({
             headless: true,  // Habilita el modo headless (sin interfaz gráfica)
@@ -19,7 +19,7 @@ app.post('/generate-pdf', async (req, res) => {
             ]
           });
         const page = await browser.newPage();
-        const html = `
+        const entireHtml = `
           <!DOCTYPE html>
           <html lang="es">
             <head>
@@ -27,14 +27,14 @@ app.post('/generate-pdf', async (req, res) => {
               <link rel="stylesheet" href="https://wkfclient.bsp-inspector.cl/assets/styles/editor.css">
             </head>
             <body>
-              ${body}
+              ${html}
             </body>
           </html>
         `;
-        await page.addStyleTag({
-            url: 'https://wkfclient.bsp-inspector.cl/assets/styles/editor.css'
-        });
-        await page.setContent(html, { waitUntil: 'networkidle0' });
+        // await page.addStyleTag({
+        //     url: 'https://wkfclient.bsp-inspector.cl/assets/styles/editor.css'
+        // });
+        await page.setContent(entireHtml, { waitUntil: 'networkidle0' });
          
         const pdfBuffer = await page.pdf({ format: 'Letter' });
         await browser.close();
